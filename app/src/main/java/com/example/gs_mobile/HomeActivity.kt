@@ -60,9 +60,21 @@ class HomeActivity : AppCompatActivity() {
     private fun logout() {
         auth.signOut()
         Toast.makeText(this, "Logout realizado com sucesso!", Toast.LENGTH_SHORT).show()
-        // Redireciona para a tela de login após logout
+
+        // Redireciona para a tela de login após logout e limpa a pilha de atividades
         val intent = Intent(this, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
         finish() // Fecha a tela Home
     }
+
+    // Sobrescreve o comportamento do botão de voltar
+    @Deprecated("This method has been deprecated in favor of using the\n      {@link OnBackPressedDispatcher} via {@link #getOnBackPressedDispatcher()}.\n      The OnBackPressedDispatcher controls how back button events are dispatched\n      to one or more {@link OnBackPressedCallback} objects.",
+        ReplaceWith("super.onBackPressed()", "androidx.appcompat.app.AppCompatActivity")
+    )
+    override fun onBackPressed() {
+        super.onBackPressed()
+        // Não faz nada, impedindo o comportamento padrão de voltar
+    }
 }
+

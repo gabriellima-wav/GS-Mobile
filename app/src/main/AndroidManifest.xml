@@ -25,6 +25,7 @@
         <activity android:name=".CadastroActivity" />
         <activity android:name=".ResetPasswordActivity" />
         <activity android:name=".HomeActivity" />
+        <activity android:name=".UserProfileActivity" />
 
     </application>
 
