@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "824194123293",
+    "project_id": "prospeco-fb44d",
+    "storage_bucket": "prospeco-fb44d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:824194123293:android:0a8015da30abe5b3d7a8f4",
+        "android_client_info": {
+          "package_name": "com.example.gs_mobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqTIStnFjhP2oEsr4LrhG4sxV8Uk-oNcc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

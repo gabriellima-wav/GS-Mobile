@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.example.gs_mobile" />
+                  <option name="mobileSdkAppId" value="1:824194123293:android:0a8015da30abe5b3d7a8f4" />
+                  <option name="projectId" value="prospeco-fb44d" />
+                  <option name="projectNumber" value="824194123293" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
