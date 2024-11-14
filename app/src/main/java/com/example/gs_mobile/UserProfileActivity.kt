@@ -1,4 +1,3 @@
-// UserProfileActivity.kt
 package com.example.gs_mobile
 
 import android.os.Bundle

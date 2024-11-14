@@ -111,9 +111,10 @@
                 android:layout_gravity="center_horizontal"
                 android:clickable="true"
                 android:focusable="true"
-                android:text="Cadastrar"
+                android:text="Clique aqui para Cadastrar"
                 android:textColor="@color/colorPrimary"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

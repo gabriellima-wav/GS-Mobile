@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">GS-Mobile</string>
+    <string name="cone_do_usu_rio">Ícone do usuário</string>
+    <string name="logo" />
 </resources>
