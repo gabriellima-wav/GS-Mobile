@@ -1,13 +1,12 @@
-// HeaderView.kt
 package com.example.gs_mobile
 
 import android.content.Context
+import android.content.Intent
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.content.Intent
-import com.example.gs_mobile.R
+import android.widget.Toast
 
 class HeaderView @JvmOverloads constructor(
     context: Context,
@@ -21,9 +20,17 @@ class HeaderView @JvmOverloads constructor(
         // Referencia o ícone de usuário e adiciona o listener de clique
         val ivUserIcon: ImageView = findViewById(R.id.ivUserIcon)
         ivUserIcon.setOnClickListener {
-            // Inicia a página de perfil do usuário
-            val intent = Intent(context, UserProfileActivity::class.java)
-            context.startActivity(intent)
+            try {
+                // Verifica se a navegação para a UserProfileActivity está funcionando
+                val intent = Intent(context, UserProfileActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                context.startActivity(intent)
+            } catch (e: Exception) {
+                // Caso haja algum erro, exibe uma mensagem
+                Toast.makeText(context, "Erro ao abrir o perfil do usuário", Toast.LENGTH_SHORT).show()
+                e.printStackTrace()
+            }
         }
     }
 }
+
