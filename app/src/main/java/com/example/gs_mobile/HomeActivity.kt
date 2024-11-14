@@ -1,80 +1,44 @@
 package com.example.gs_mobile
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
-import android.widget.Button
+import android.view.Window
+import android.view.WindowManager
+import android.widget.ImageButton
+import android.widget.ProgressBar
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.startActivity
-import com.example.gs_mobile.LoginActivity
-import com.example.gs_mobile.R
-import com.google.firebase.auth.FirebaseAuth
 
 class HomeActivity : AppCompatActivity() {
-
-    private lateinit var auth: FirebaseAuth
-    private lateinit var btnLogout: Button
-    private lateinit var tvWelcomeMessage: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        // Inicializando FirebaseAuth
-        auth = FirebaseAuth.getInstance()
-
-        // Altera a cor da barra de status
-        window.statusBarColor = ContextCompat.getColor(this, R.color.colorBackground)
-
-        // Inicializando o botão de logout e a TextView
-        btnLogout = findViewById(R.id.btnLogout)
-        tvWelcomeMessage = findViewById(R.id.tvWelcomeMessage)
-
-        // Exibe a mensagem de boas-vindas
-        displayWelcomeMessage()
-
-        // Configura o clique do botão de logout
-        btnLogout.setOnClickListener {
-            logout()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val window: Window = window
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window.statusBarColor = resources.getColor(R.color.colorPrimary) // Defina sua cor aqui
         }
-    }
 
-    // Função para exibir a mensagem de boas-vindas
-    private fun displayWelcomeMessage() {
-        val user = auth.currentUser
-        if (user != null) {
-            val welcomeText = "Bem-vindo, ${user.displayName ?: user.email}!"
-            tvWelcomeMessage.text = welcomeText
-        } else {
-            // Caso o usuário não esteja autenticado, redireciona para LoginActivity
-            Toast.makeText(this, "Usuário não autenticado. Redirecionando para login...", Toast.LENGTH_SHORT).show()
-            val intent = Intent(this, LoginActivity::class.java)
+        // Configuração do botão de perfil
+        val btnProfile: ImageButton = findViewById(R.id.btnProfile)
+        btnProfile.setOnClickListener {
+            val intent = Intent(this, UserProfileActivity::class.java)
             startActivity(intent)
-            finish()  // Finaliza a atividade atual
         }
-    }
 
-    // Função para realizar logout
-    private fun logout() {
-        auth.signOut()
-        Toast.makeText(this, "Logout realizado com sucesso!", Toast.LENGTH_SHORT).show()
+        // Configuração inicial das seções
+        val tvConsumptionOverview: TextView = findViewById(R.id.tvConsumptionOverview)
+        val tvTariffDetails: TextView = findViewById(R.id.tvTariffDetails)
+        val tvTipsDetails: TextView = findViewById(R.id.tvTipsDetails)
+        val progressMonthlyGoal: ProgressBar = findViewById(R.id.progressMonthlyGoal)
 
-        // Redireciona para a tela de login após logout e limpa a pilha de atividades
-        val intent = Intent(this, LoginActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        startActivity(intent)
-        finish() // Fecha a tela Home
-    }
-
-    // Sobrescreve o comportamento do botão de voltar
-    @Deprecated("This method has been deprecated in favor of using the\n      {@link OnBackPressedDispatcher} via {@link #getOnBackPressedDispatcher()}.\n      The OnBackPressedDispatcher controls how back button events are dispatched\n      to one or more {@link OnBackPressedCallback} objects.",
-        ReplaceWith("super.onBackPressed()", "androidx.appcompat.app.AppCompatActivity")
-    )
-    override fun onBackPressed() {
-        super.onBackPressed()
-        // Não faz nada, impedindo o comportamento padrão de voltar
+        // Exemplo: Preenchendo dados (API será integrada futuramente)
+        tvConsumptionOverview.text = "Consumo atual: 150 kWh"
+        tvTariffDetails.text = "Bandeira atual: Amarela"
+        tvTipsDetails.text = "Dica: Use a máquina de lavar antes das 18h."
+        progressMonthlyGoal.progress = 60 // Exemplo de progresso
     }
 }
-

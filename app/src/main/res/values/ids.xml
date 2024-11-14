@@ -2,4 +2,6 @@
 <resources>
     <item name="textViewEntrar" type="id" />
     <item name="etSenha" type="id" />
+    <item name="header" type="id" />
+    <item name="icon_profile" type="id" />
 </resources>

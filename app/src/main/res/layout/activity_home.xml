@@ -1,27 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    tools:context=".HomeActivity">
 
-    <!-- Inclui o layout do header, que ficará no topo -->
-    <include layout="@layout/header_layout" />
+    <!-- Header com botão para perfil -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageButton
+            android:id="@+id/btnProfile"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="end"
+            android:background="@null"
+            android:contentDescription="Botão de perfil"
+            android:layout_marginRight="370sp"
+            android:src="@mipmap/quatro_pontinhos" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <!-- Visão Geral do Consumo Atual -->
+    <TextView
+        android:id="@+id/tvConsumptionOverview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Consumo Atual"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/header"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp" />
+
+    <View
+        android:id="@+id/chartConsumption"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:background="@color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp" />
+
+    <!-- Resumo das Bandeiras Tarifárias -->
+    <TextView
+        android:id="@+id/tvTariffFlag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bandeira Tarifária"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/chartConsumption"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp" />
 
     <TextView
-        android:id="@+id/tvWelcomeMessage"
+        android:id="@+id/tvTariffDetails"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Bandeira atual: Verde"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTariffFlag"
+        android:layout_marginTop="4dp" />
+
+    <!-- Recomendações do Dia -->
+    <TextView
+        android:id="@+id/tvDailyTips"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="20dp"
-        android:text="Bem-vindo!"
-        android:textSize="18sp" />
+        android:text="Recomendações do Dia"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/tvTariffDetails"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp" />
 
-    <Button
-        android:id="@+id/btnLogout"
+    <TextView
+        android:id="@+id/tvTipsDetails"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Dica: Utilize eletrodomésticos em horários de menor consumo."
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvDailyTips"
+        android:layout_marginTop="4dp" />
+
+    <!-- Meta Mensal e Progresso -->
+    <TextView
+        android:id="@+id/tvMonthlyGoal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:text="Sair"
-        android:textColor="#FFFFFF" />
+        android:text="Meta Mensal"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/tvTipsDetails"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp" />
 
-</LinearLayout>
+    <ProgressBar
+        android:id="@+id/progressMonthlyGoal"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:max="100"
+        android:progress="50"
+        android:progressTint="@color/colorAccent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvMonthlyGoal"
+        android:layout_marginTop="8dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
