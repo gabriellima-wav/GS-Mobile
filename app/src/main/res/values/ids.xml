@@ -4,4 +4,12 @@
     <item name="etSenha" type="id" />
     <item name="header" type="id" />
     <item name="icon_profile" type="id" />
+    <item name="btnChangePassword" type="id" />
+    <item name="btnDeleteAccount" type="id" />
+    <item name="monitoringTitle" type="id" />
+    <item name="addItemButton" type="id" />
+    <item name="appliancesRecyclerView" type="id" />
+    <item name="textBadge" type="id" />
+    <item name="badgeName" type="id" />
+    <item name="rankName" type="id" />
 </resources>

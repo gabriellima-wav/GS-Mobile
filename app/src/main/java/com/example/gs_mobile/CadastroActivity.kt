@@ -2,11 +2,16 @@ package com.example.gs_mobile
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
 import com.example.gs_mobile.HomeActivity
 import com.example.gs_mobile.R
 import com.example.gs_mobile.Usuario
@@ -103,6 +108,25 @@ class CadastroActivity : AppCompatActivity() {
                     // Falha no cadastro
                     Toast.makeText(this, "Erro ao cadastrar: ${task.exception?.message}", Toast.LENGTH_LONG).show()
                 }
+
+                class BadgesAdapter(private val data: List<String>) : RecyclerView.Adapter<BadgesAdapter.BadgesViewHolder>() {
+
+                    inner class BadgesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+                        val textView: TextView = itemView.findViewById(R.id.textBadge)
+                    }
+
+                    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BadgesViewHolder {
+                        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_badge, parent, false)
+                        return BadgesViewHolder(view)
+                    }
+
+                    override fun onBindViewHolder(holder: BadgesViewHolder, position: Int) {
+                        holder.textView.text = data[position]
+                    }
+
+                    override fun getItemCount(): Int = data.size
+                }
+
             }
     }
 }
