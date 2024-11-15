@@ -25,7 +25,9 @@
         <activity android:name=".CadastroActivity" />
         <activity android:name=".ResetPasswordActivity" />
         <activity android:name=".HomeActivity" />
-        <activity android:name=".UserProfileActivity" />
+        <activity android:name="com.example.prospapp.UserProfileActivity" />
+        <activity android:name="AchievementsActivity"/>
+        <activity android:name="com.example.prospapp.MonitoringActivity"/>
 
 
     </application>

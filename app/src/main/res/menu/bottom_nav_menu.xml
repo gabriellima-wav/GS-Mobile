@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/item_monitoring"
+        android:icon="@mipmap/monitor"
+        android:title="Monitoramento" />
+    <item
+        android:id="@+id/item_home"
+        android:icon="@mipmap/home"
+        android:title="Home" />
+    <item
+        android:id="@+id/item_achievements"
+        android:icon="@mipmap/trophy"
+        android:title="Conquistas" />
+
+</menu>
