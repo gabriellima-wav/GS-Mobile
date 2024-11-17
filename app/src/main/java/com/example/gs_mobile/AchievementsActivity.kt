@@ -1,42 +1,58 @@
 package com.example.gs_mobile
 
-    import android.os.Bundle
-    import android.service.notification.NotificationListenerService
-    import androidx.appcompat.app.AppCompatActivity
-    import androidx.compose.material3.Badge
-    import androidx.recyclerview.widget.LinearLayoutManager
-    import androidx.recyclerview.widget.RecyclerView
-    import com.example.gs_mobile.R
-    import com.example.prospapp.models.BadgesAdapter
-    import com.example.prospapp.models.RankingAdapter
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import android.widget.LinearLayout
+import android.widget.TextView
+import com.example.gs_mobile.R
 
-    class AchievementsActivity : AppCompatActivity() {
+class AchievementsActivity : AppCompatActivity() {
 
-        override fun onCreate(savedInstanceState: Bundle?) {
-            super.onCreate(savedInstanceState)
-            setContentView(R.layout.activity_achievements)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_achievements)
 
-            val recyclerViewBadges = findViewById<RecyclerView>(R.id.recyclerViewBadges)
-            val recyclerViewRanking = findViewById<RecyclerView>(R.id.recyclerViewRanking)
+        // Obtendo as referências para os layouts que vão exibir os badges e ranking
+        val badgesLayout = findViewById<LinearLayout>(R.id.sectionScores)
+        val rankingLayout = findViewById<LinearLayout>(R.id.sectionCommunityRanking)
 
-            // Configurando o LayoutManager
-            recyclerViewBadges.layoutManager = LinearLayoutManager(this)
-            recyclerViewRanking.layoutManager = LinearLayoutManager(this)
+        // Preenchendo a seção de badges
+        populateBadgesSection(badgesLayout)
 
-            // Configurando os Adapters
-            val badgesAdapter = BadgesAdapter(getBadgesData())
-            val rankingAdapter = RankingAdapter(getRankingData())
+        // Preenchendo a seção de ranking
+        populateRankingSection(rankingLayout)
+    }
 
-            recyclerViewBadges.adapter = badgesAdapter
-            recyclerViewRanking.adapter = rankingAdapter
-        }
-
-        // Dados simulados para demonstração
-        private fun getBadgesData(): List<String> {
-            return listOf("Selo de Economia", "Selo de Sustentabilidade", "Meta Mensal Batida")
-        }
-
-        private fun getRankingData(): List<String> {
-            return listOf("1. Usuário A", "2. Usuário B", "3. Usuário C")
+    // Função para popular a seção de Badges
+    private fun populateBadgesSection(badgesLayout: LinearLayout) {
+        val badgesData = getBadgesData()
+        for (badge in badgesData) {
+            val badgeTextView = TextView(this)
+            badgeTextView.text = badge
+            badgeTextView.textSize = 16f
+            badgeTextView.setTextColor(resources.getColor(R.color.black)) // Defina a cor desejada
+            badgesLayout.addView(badgeTextView)
         }
     }
+
+    // Função para popular a seção de Ranking
+    private fun populateRankingSection(rankingLayout: LinearLayout) {
+        val rankingData = getRankingData()
+        for (ranking in rankingData) {
+            val rankingTextView = TextView(this)
+            rankingTextView.text = ranking
+            rankingTextView.textSize = 16f
+            rankingTextView.setTextColor(resources.getColor(R.color.black)) // Defina a cor desejada
+            rankingLayout.addView(rankingTextView)
+        }
+    }
+
+    // Dados simulados para demonstração
+    private fun getBadgesData(): List<String> {
+        return listOf("Selo de Economia", "Selo de Sustentabilidade", "Meta Mensal Batida")
+    }
+
+    private fun getRankingData(): List<String> {
+        return listOf("1. Usuário A", "2. Usuário B", "3. Usuário C")
+    }
+}

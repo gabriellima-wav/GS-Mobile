@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     tools:context="AchievementsActivity">
 
+    <!-- Toolbar -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/header"
         android:layout_width="match_parent"
@@ -25,8 +26,10 @@
             android:layout_gravity="end"
             android:background="@null"
             android:contentDescription="Botão de perfil"
-            android:layout_marginRight="370sp"
-            android:src="@mipmap/quatro_pontinhos" />
+            android:src="@mipmap/quatro_pontinhos"
+            tools:ignore="TouchTargetSizeCheck"
+            tools:layout_editor_absoluteX="2dp"
+            tools:layout_editor_absoluteY="8dp" />
     </androidx.appcompat.widget.Toolbar>
 
     <!-- Pontuação e Selos -->
@@ -39,7 +42,7 @@
         android:padding="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/header">
 
         <TextView
             android:layout_width="wrap_content"
@@ -49,13 +52,34 @@
             android:textColor="@color/black"
             android:textSize="18sp" />
 
-        <RecyclerView
-            android:id="@+id/recyclerViewBadges"
+        <!-- Simulação de Badges com TextViews -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:scrollbars="vertical"
-            tools:listitem="@layout/item_badge" />
+            android:orientation="vertical"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Selo de Economia"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Selo de Sustentabilidade"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Meta Mensal Batida"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+        </LinearLayout>
     </LinearLayout>
 
     <!-- Gráfico de Consumo -->
@@ -94,7 +118,6 @@
         android:background="@drawable/card_background"
         android:orientation="vertical"
         android:padding="16dp"
-        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/sectionConsumptionChart">
@@ -107,19 +130,40 @@
             android:textColor="@color/black"
             android:textSize="18sp" />
 
-        <RecyclerView
-            android:id="@+id/recyclerViewRanking"
+        <!-- Simulação de Ranking com TextViews -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:scrollbars="vertical"
-            tools:listitem="@layout/item_ranking" />
+            android:orientation="vertical"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1. Usuário A"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2. Usuário B"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3. Usuário C"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+        </LinearLayout>
     </LinearLayout>
 
     <!-- Bottom Navigation View -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         app:itemIconTint="@color/white"
@@ -127,9 +171,6 @@
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
         app:menu="@menu/bottom_nav_menu" />
 </androidx.constraintlayout.widget.ConstraintLayout>

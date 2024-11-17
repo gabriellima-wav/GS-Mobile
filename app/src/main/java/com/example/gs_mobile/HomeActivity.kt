@@ -3,6 +3,7 @@ package com.example.gs_mobile
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.Window
 import android.view.WindowManager
 import android.widget.ImageButton
@@ -49,16 +50,24 @@ class HomeActivity : AppCompatActivity() {
         val bottomNavigation = findViewById<BottomNavigationView>(R.id.bottom_navigation)
         bottomNavigation.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.item_home -> true
+                R.id.item_home -> {
+                    Log.d("Navigation", "Item Home selecionado")
+                    true
+                }
                 R.id.item_monitoring -> {
+                    Log.d("Navigation", "Item Monitoring selecionado")
                     startActivity(Intent(this, MonitoringActivity::class.java))
                     true
                 }
                 R.id.item_achievements -> {
+                    Log.d("Navigation", "Item Achievements selecionado")
                     startActivity(Intent(this, AchievementsActivity::class.java))
                     true
                 }
-                else -> false
+                else -> {
+                    Log.d("Navigation", "Item desconhecido selecionado")
+                    false
+                }
             }
         }
     }

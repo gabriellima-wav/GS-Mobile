@@ -11,8 +11,8 @@ android {
 
     defaultConfig {
         applicationId = "com.example.gs_mobile"
-        minSdk = 24
-        targetSdk = 34
+        minSdk = 26
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -41,7 +41,6 @@ dependencies {
     implementation("androidx.recyclerview:recyclerview:1.3.1")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
-    implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.firebase.auth.ktx)
@@ -53,4 +52,5 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:33.5.1"))
     implementation("com.google.firebase:firebase-analytics")
     implementation ("com.google.android.material:material:1.9.0")
+    implementation ("androidx.appcompat:appcompat:1.2.0")
 }
