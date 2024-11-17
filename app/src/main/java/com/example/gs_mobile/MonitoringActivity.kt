@@ -20,7 +20,7 @@ class MonitoringActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: ApplianceAdapter
     private lateinit var addItemButton: Button
-    private lateinit var profileImageButton: ImageButton  // Referência para o ImageButton
+    private lateinit var profileImageButton: ImageButton
 
     // Lista que será monitorada
     private val appliances = mutableListOf<Appliance>()

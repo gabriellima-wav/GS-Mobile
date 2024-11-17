@@ -3,9 +3,11 @@ package com.example.gs_mobile
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputType
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -13,13 +15,14 @@ import androidx.core.content.ContextCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
-import android.util.Log
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var etEmail: EditText
     private lateinit var etPassword: EditText
     private lateinit var cbRememberMe: CheckBox
+    private lateinit var btnShowPassword: ImageButton
+    private var isPasswordVisible = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,9 +31,6 @@ class LoginActivity : AppCompatActivity() {
         // Inicializando o Firebase Auth
         auth = FirebaseAuth.getInstance()
 
-        // Altera a cor da barra de status
-        window.statusBarColor = ContextCompat.getColor(this, R.color.colorBackground)
-
         // Configurações de elementos da interface
         val textCadastro = findViewById<TextView>(R.id.textCadastro)
         val textEsqueceuSenha = findViewById<TextView>(R.id.textEsqueceuSenha)
@@ -38,6 +38,7 @@ class LoginActivity : AppCompatActivity() {
         etEmail = findViewById(R.id.etEmail)
         etPassword = findViewById(R.id.etPassword)
         cbRememberMe = findViewById(R.id.cbRememberMe)
+        btnShowPassword = findViewById(R.id.btnShowPassword)
 
         // Carrega o e-mail salvo (se existir) ao iniciar o aplicativo
         loadRememberedEmail()
@@ -84,6 +85,19 @@ class LoginActivity : AppCompatActivity() {
                         }
                     }
             }
+        }
+
+        // Alternar visibilidade da senha
+        btnShowPassword.setOnClickListener {
+            isPasswordVisible = !isPasswordVisible
+            if (isPasswordVisible) {
+                etPassword.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                btnShowPassword.setImageResource(R.mipmap.eye) // Ícone de senha visível
+            } else {
+                etPassword.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                btnShowPassword.setImageResource(R.mipmap.eye_off) // Ícone de senha oculta
+            }
+            etPassword.setSelection(etPassword.text.length) // Move o cursor para o final
         }
     }
 
