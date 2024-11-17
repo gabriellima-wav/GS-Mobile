@@ -73,6 +73,13 @@
                     android:src="@mipmap/eye" />
             </LinearLayout>
 
+            <ImageButton
+                android:id="@+id/btnShowPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:src="@mipmap/eye" />
+
             <CheckBox
                 android:id="@+id/cbRememberMe"
                 android:layout_width="wrap_content"
