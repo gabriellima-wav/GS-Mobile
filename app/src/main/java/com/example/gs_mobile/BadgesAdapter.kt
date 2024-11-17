@@ -18,11 +18,14 @@ class BadgesAdapter(private val badges: List<String>) : RecyclerView.Adapter<Bad
         holder.bind(badges[position])
     }
 
-    override fun getItemCount() = badges.size
+    override fun getItemCount(): Int = badges.size
 
     inner class BadgeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val badgeNameTextView: TextView = itemView.findViewById(R.id.badgeName)
+
         fun bind(badge: String) {
-            itemView.findViewById<TextView>(R.id.badgeName).text = badge
+            badgeNameTextView.text = badge
         }
     }
 }
+

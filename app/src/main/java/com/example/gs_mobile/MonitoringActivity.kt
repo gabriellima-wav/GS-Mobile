@@ -11,16 +11,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.gs_mobile.AchievementsActivity
+import com.example.gs_mobile.HomeActivity
 import com.example.gs_mobile.R
 import com.example.prospapp.adapters.ApplianceAdapter
 import com.example.prospapp.models.Appliance
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MonitoringActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: ApplianceAdapter
     private lateinit var addItemButton: Button
-    private lateinit var profileImageButton: ImageButton  // Referência para o ImageButton
+    private lateinit var profileImageButton: ImageButton
+    private lateinit var bottomNavigationView: BottomNavigationView
 
     // Lista que será monitorada
     private val appliances = mutableListOf<Appliance>()
@@ -32,14 +36,30 @@ class MonitoringActivity : AppCompatActivity() {
         // Definir a cor da Status Bar
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
             val window = window
-            window.statusBarColor = ContextCompat.getColor(this, R.color.colorPrimary) // Usando a cor definida no colors.xml
+            window.statusBarColor = ContextCompat.getColor(this, R.color.colorPrimary)
         }
 
         recyclerView = findViewById(R.id.appliancesRecyclerView)
         addItemButton = findViewById(R.id.addItemButton)
-        profileImageButton = findViewById(R.id.btnProfile)  // Inicializa o ImageButton
+        profileImageButton = findViewById(R.id.btnProfile)
+        bottomNavigationView = findViewById(R.id.bottom_navigation)
 
         setupRecyclerView()
+
+        // Configurar listener de navegação na BottomNavigationView
+        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.item_home -> {
+                    startActivity(Intent(this, HomeActivity::class.java))
+                    true
+                }
+                R.id.item_achievements -> {
+                    startActivity(Intent(this, AchievementsActivity::class.java))
+                    true
+                }
+                else -> false
+            }
+        }
 
         // Adicionar item na lista
         addItemButton.setOnClickListener {
@@ -50,7 +70,7 @@ class MonitoringActivity : AppCompatActivity() {
             }
         }
 
-        // Navegar para a tela de perfil ao clicar no ImageButton
+        // Navegar para a tela de perfil
         profileImageButton.setOnClickListener {
             val intent = Intent(this, UserProfileActivity::class.java)
             startActivity(intent)
@@ -97,8 +117,8 @@ class MonitoringActivity : AppCompatActivity() {
             .setTitle("Gerenciar Item")
             .setItems(options) { _, which ->
                 when (which) {
-                    0 -> showEditItemDialog(position) // Editar
-                    1 -> removeItem(position)         // Remover
+                    0 -> showEditItemDialog(position)
+                    1 -> removeItem(position)
                 }
             }
             .create()

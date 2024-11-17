@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".LoginActivity">
 
-    <!-- CardView que contém o logo, campos de e-mail, senha e link de cadastro -->
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -31,8 +30,7 @@
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="0dp"
-                android:gravity="center"
+                android:layout_marginBottom="16dp"
                 android:src="@mipmap/logo_preta" />
 
             <TextView
@@ -40,15 +38,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="0dp"
-                android:layout_marginBottom="0sp"
-                android:clickable="true"
-                android:focusable="true"
-                android:fontFamily="@font/lato_regular"
                 android:text="ProspEco"
                 android:textColor="@color/black"
                 android:textSize="32sp" />
-
 
             <EditText
                 android:id="@+id/etEmail"
@@ -58,26 +50,35 @@
                 android:hint="E-mail"
                 android:inputType="textEmailAddress" />
 
-            <!-- Campo de Senha -->
-            <EditText
-                android:id="@+id/etPassword"
+            <!-- Campo de Senha e Botão de Mostrar Senha -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                android:hint="Senha"
-                android:inputType="textPassword" />
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
 
-            <!-- Botão Login -->
+                <EditText
+                    android:id="@+id/etPassword"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Senha"
+                    android:inputType="textPassword" />
+
+                <ImageButton
+                    android:id="@+id/btnShowPassword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:src="@mipmap/eye" />
+            </LinearLayout>
 
             <CheckBox
                 android:id="@+id/cbRememberMe"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
-                android:layout_marginStart="0dp"
-                android:layout_marginLeft="500dp"
-                android:layout_marginEnd="110dp"
-                android:layout_marginBottom="0dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="110dp"
                 android:text="Lembre de mim"
                 android:textColor="@color/black" />
 
@@ -86,11 +87,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginStart="90sp"
-                android:layout_marginTop="0dp"
-                android:layout_marginBottom="16dp"
-                android:clickable="true"
-                android:focusable="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="100dp"
                 android:text="Esqueceu a senha?"
                 android:textColor="@color/colorPrimary"
                 android:textSize="16sp" />
@@ -99,22 +97,19 @@
                 android:id="@+id/btnLogin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
+                android:layout_marginTop="16dp"
                 android:background="@drawable/rounded_button"
                 android:text="Login" />
 
-            <!-- Texto para redirecionar ao Cadastro -->
             <TextView
                 android:id="@+id/textCadastro"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:clickable="true"
-                android:focusable="true"
+                android:layout_marginTop="16dp"
                 android:text="Clique aqui para Cadastrar"
                 android:textColor="@color/colorPrimary"
-                android:textSize="20sp"
-                />
+                android:textSize="20sp" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
@@ -134,4 +129,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.023" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
