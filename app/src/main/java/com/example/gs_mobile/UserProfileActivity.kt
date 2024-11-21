@@ -1,5 +1,6 @@
 package com.example.prospapp
 
+import MainActivity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -10,7 +11,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.gs_mobile.HomeActivity
-import com.example.gs_mobile.MainActivity
+
 import com.example.gs_mobile.R
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
@@ -39,6 +40,7 @@ class UserProfileActivity : AppCompatActivity() {
         val deleteAccountButton: Button = findViewById(R.id.deleteAccountButton)
         val saveButton: Button = findViewById(R.id.saveButton)
 
+        // Botão de navegação para a Home
         btnHome.setOnClickListener {
             val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)
@@ -53,7 +55,7 @@ class UserProfileActivity : AppCompatActivity() {
             firestore.collection("users").document(userId)
                 .get()
                 .addOnSuccessListener { document ->
-                    if (document != null) {
+                    if (document.exists()) {
                         val nome = document.getString("nome")
                         val sobrenome = document.getString("sobrenome")
                         val endereco = document.getString("endereco")
@@ -62,11 +64,16 @@ class UserProfileActivity : AppCompatActivity() {
                         etNome.setText(nome)
                         etSobrenome.setText(sobrenome)
                         etEndereco.setText(endereco)
+                    } else {
+                        Toast.makeText(this, "Usuário não encontrado no Firestore", Toast.LENGTH_SHORT).show()
                     }
                 }
-                .addOnFailureListener {
-                    Toast.makeText(this, "Erro ao recuperar dados!", Toast.LENGTH_SHORT).show()
+                .addOnFailureListener { exception ->
+                    Toast.makeText(this, "Erro ao recuperar dados: ${exception.message}", Toast.LENGTH_SHORT).show()
                 }
+        } ?: run {
+            Toast.makeText(this, "Usuário não autenticado!", Toast.LENGTH_SHORT).show()
+            return
         }
 
         // Alterar senha

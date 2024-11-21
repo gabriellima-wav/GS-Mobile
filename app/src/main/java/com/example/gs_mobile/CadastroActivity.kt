@@ -1,22 +1,23 @@
 package com.example.gs_mobile
 
+import Usuario
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.RecyclerView
-import com.example.gs_mobile.HomeActivity
-import com.example.gs_mobile.R
-import com.example.gs_mobile.Usuario
+import androidx.lifecycle.lifecycleScope
+import com.example.gs_mobile.api.ApiResponse
+import com.example.prospapp.api.ProspecoApiService
+import com.example.prospapp.api.RetrofitInstance
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class CadastroActivity : AppCompatActivity() {
 
@@ -24,9 +25,9 @@ class CadastroActivity : AppCompatActivity() {
     private lateinit var etEmail: EditText
     private lateinit var etPassword: EditText
     private lateinit var etConfirmPassword: EditText
-    private lateinit var etNome: EditText  // Novo campo para o nome
-    private lateinit var etSobrenome: EditText  // Novo campo para o sobrenome
-    private lateinit var etEndereco: EditText  // Novo campo para o endereço
+    private lateinit var etNome: EditText
+    private lateinit var etSobrenome: EditText
+    private lateinit var etEndereco: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,25 +36,25 @@ class CadastroActivity : AppCompatActivity() {
         // Inicializar Firebase Auth
         auth = FirebaseAuth.getInstance()
 
-        // Definir a cor da barra de status
+        // Configurar a cor da barra de status
         window.statusBarColor = ContextCompat.getColor(this, R.color.colorBackground)
 
         // Inicializar elementos de interface
         etEmail = findViewById(R.id.etEmail)
         etPassword = findViewById(R.id.etPassword)
         etConfirmPassword = findViewById(R.id.etConfirmPassword)
-        etNome = findViewById(R.id.etNome)  // Inicializando o campo de nome
-        etSobrenome = findViewById(R.id.etSobrenome)  // Inicializando o campo de sobrenome
-        etEndereco = findViewById(R.id.etEndereco)  // Inicializando o campo de endereço
+        etNome = findViewById(R.id.etNome)
+        etSobrenome = findViewById(R.id.etSobrenome)
+        etEndereco = findViewById(R.id.etEndereco)
         val btnCadastrar = findViewById<Button>(R.id.btnCadastrar)
 
-        // Configurar o clique no botão de cadastro
+        // Configurar clique no botão de cadastro
         btnCadastrar.setOnClickListener {
             val email = etEmail.text.toString().trim()
             val password = etPassword.text.toString().trim()
             val confirmPassword = etConfirmPassword.text.toString().trim()
 
-            // Verificar se todos os campos estão preenchidos
+            // Validação de campos
             if (email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() ||
                 etNome.text.isEmpty() || etSobrenome.text.isEmpty() || etEndereco.text.isEmpty()) {
                 Toast.makeText(this, "Por favor, preencha todos os campos.", Toast.LENGTH_SHORT).show()
@@ -69,64 +70,62 @@ class CadastroActivity : AppCompatActivity() {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    // Cadastro bem-sucedido
-                    Toast.makeText(this, "Cadastro realizado com sucesso!", Toast.LENGTH_LONG).show()
-
-                    // Obter o ID do usuário atual
                     val userId = auth.currentUser?.uid
-
-                    // Criar um objeto Usuario com os dados do formulário
-                    val nome = etNome.text.toString().trim()
-                    val sobrenome = etSobrenome.text.toString().trim()
-                    val endereco = etEndereco.text.toString().trim()
-
-                    val usuario = Usuario(nome, sobrenome, email, endereco)
-
-                    // Salvar os dados no Firebase Realtime Database
-                    val database = FirebaseDatabase.getInstance()
-                    val userRef = database.getReference("usuarios").child(userId!!)
-
-                    // Salvar as informações do usuário, exceto a senha
-                    userRef.setValue(usuario)
-                        .addOnCompleteListener { dbTask ->
-                            if (dbTask.isSuccessful) {
-                                // Limpar campos ou redirecionar para outra tela
-                                etEmail.text.clear()
-                                etPassword.text.clear()
-                                etConfirmPassword.text.clear()  // Limpar também o campo de confirmação de senha
-
-                                // Redirecionar para a HomeActivity
-                                val intent = Intent(this, HomeActivity::class.java)
-                                startActivity(intent)
-                                finish()  // Fecha a tela de cadastro
-                            } else {
-                                // Erro ao salvar dados no Firebase Realtime Database
-                                Toast.makeText(this, "Erro ao salvar dados: ${dbTask.exception?.message}", Toast.LENGTH_LONG).show()
-                            }
-                        }
+                    if (userId != null) {
+                        saveUserToFirebase(userId, email)
+                    }
                 } else {
-                    // Falha no cadastro
                     Toast.makeText(this, "Erro ao cadastrar: ${task.exception?.message}", Toast.LENGTH_LONG).show()
                 }
-
-                class BadgesAdapter(private val data: List<String>) : RecyclerView.Adapter<BadgesAdapter.BadgesViewHolder>() {
-
-                    inner class BadgesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-                        val textView: TextView = itemView.findViewById(R.id.textBadge)
-                    }
-
-                    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BadgesViewHolder {
-                        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_badge, parent, false)
-                        return BadgesViewHolder(view)
-                    }
-
-                    override fun onBindViewHolder(holder: BadgesViewHolder, position: Int) {
-                        holder.textView.text = data[position]
-                    }
-
-                    override fun getItemCount(): Int = data.size
-                }
-
             }
+    }
+
+    private fun saveUserToFirebase(userId: String, email: String) {
+        val nome = etNome.text.toString().trim()
+        val sobrenome = etSobrenome.text.toString().trim()
+        val endereco = etEndereco.text.toString().trim()
+
+        val id = ""
+        val usuario = Usuario(nome, sobrenome, email, endereco, id)
+        val database = FirebaseDatabase.getInstance()
+        val userRef = database.getReference("usuarios").child(userId)
+
+        userRef.setValue(usuario).addOnCompleteListener { dbTask ->
+            if (dbTask.isSuccessful) {
+                sendUserToApi(usuario)
+                navigateToHome()
+            } else {
+                Toast.makeText(this, "Erro ao salvar dados no Firebase.", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    private fun sendUserToApi(usuario: Usuario) {
+        lifecycleScope.launch {
+            try {
+                // Incluindo o id do usuário (se necessário)
+                val usuarioMap =
+                    usuario.toMap().toMutableMap()  // Supondo que você tenha um método que converte o usuario em Map
+                usuarioMap["id"] = usuario.id  // Adicionando o id, se necessário
+
+                val apiService = RetrofitInstance.api
+                val response = apiService.createUsuario(usuarioMap)  // Passando o Map para o método da API
+
+                if (response.success) {
+                    Toast.makeText(this@CadastroActivity, "Usuário registrado na API com sucesso!", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this@CadastroActivity, "Erro ao registrar usuário na API.", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                Toast.makeText(this@CadastroActivity, "Erro: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun navigateToHome() {
+        Toast.makeText(this, "Cadastro concluído!", Toast.LENGTH_SHORT).show()
+        val intent = Intent(this, HomeActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }

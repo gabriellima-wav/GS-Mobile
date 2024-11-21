@@ -90,14 +90,6 @@
 
 
             <!-- Texto de instrução para nova senha -->
-            <TextView
-                android:id="@+id/tvChangePasswordLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Digite a Nova Senha"
-                android:textSize="16sp"
-                android:layout_marginTop="20sp"
-                android:layout_marginBottom="20sp"/>
 
             <EditText
                 android:id="@+id/etNome"
@@ -105,6 +97,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Nome"
                 android:padding="16dp"
+                android:layout_marginRight="70sp"
                 android:text="Nome do usuário atual" />
 
             <EditText
@@ -113,6 +106,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Sobrenome"
                 android:padding="16dp"
+                android:layout_marginRight="45sp"
                 android:text="Sobrenome do usuário atual" />
 
             <EditText
@@ -121,6 +115,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Endereço"
                 android:padding="16dp"
+                android:layout_marginRight="60sp"
                 android:text="Endereço do usuário atual" />
 
             <Button
@@ -129,8 +124,17 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@android:color/holo_blue_light"
                 android:text="Salvar Alterações"
-                android:layout_marginTop="20dp" />
+                android:layout_marginTop="12dp" />
 
+            <TextView
+                android:id="@+id/tvChangePasswordLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Digite a Nova Senha"
+                android:textSize="16sp"
+                android:layout_marginRight="100sp"
+                android:layout_marginTop="20sp"
+                android:layout_marginBottom="20sp"/>
 
             <!-- Campo de nova senha -->
             <EditText

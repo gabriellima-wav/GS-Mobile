@@ -56,5 +56,8 @@ dependencies {
     implementation ("androidx.appcompat:appcompat:1.2.0")
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation (    "com.squareup.okhttp3:logging-interceptor:4.9.3")
+    implementation ("com.squareup.okhttp3:logging-interceptor:4.9.3")
+    implementation (libs.ojdbc8)
+    implementation ("com.oracle.database.jdbc:ojdbc8:19.19.0.0")
+
 }

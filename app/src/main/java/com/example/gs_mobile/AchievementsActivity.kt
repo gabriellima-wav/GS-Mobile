@@ -1,16 +1,54 @@
 package com.example.gs_mobile
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.gs_mobile.R
+import com.example.prospapp.MonitoringActivity
+import com.example.prospapp.UserProfileActivity
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class AchievementsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_achievements)
+
+        // Configuração do botão de perfil
+        val btnProfile = findViewById<ImageButton>(R.id.btnProfile)
+        btnProfile.setOnClickListener {
+            val intent = Intent(this, UserProfileActivity::class.java)
+            startActivity(intent)
+        }
+
+        // Configuração do BottomNavigationView para navegar de volta à Home ou para outras telas
+        val bottomNavigation = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        bottomNavigation.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.item_home -> {
+                    Log.d("Navigation", "Item Home selecionado")
+                    startActivity(Intent(this, HomeActivity::class.java))
+                    true
+                }
+                R.id.item_monitoring -> {
+                    Log.d("Navigation", "Item Monitoring selecionado")
+                    startActivity(Intent(this, MonitoringActivity::class.java))
+                    true
+                }
+                R.id.item_achievements -> {
+                    Log.d("Navigation", "Item Achievements selecionado")
+                    true
+                }
+                else -> {
+                    Log.d("Navigation", "Item desconhecido selecionado")
+                    false
+                }
+            }
+        }
 
         // Obtendo as referências para os layouts que vão exibir os badges e ranking
         val badgesLayout = findViewById<LinearLayout>(R.id.sectionScores)
