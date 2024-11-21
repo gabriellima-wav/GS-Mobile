@@ -46,6 +46,7 @@ dependencies {
     implementation(libs.firebase.auth.ktx)
     implementation(libs.firebase.database.ktx)
     implementation(libs.androidx.material3.android)
+    implementation(libs.firebase.firestore.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -53,4 +54,7 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics")
     implementation ("com.google.android.material:material:1.9.0")
     implementation ("androidx.appcompat:appcompat:1.2.0")
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation (    "com.squareup.okhttp3:logging-interceptor:4.9.3")
 }

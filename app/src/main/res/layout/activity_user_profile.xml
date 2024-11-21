@@ -34,6 +34,7 @@
     <!-- Título logo abaixo da Toolbar -->
 
     <!-- CardView para conteúdo abaixo do título -->
+
     <TextView
         android:id="@+id/tvLoginTitle"
         android:layout_width="wrap_content"
@@ -44,10 +45,10 @@
         android:textSize="40sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/header"
-        app:layout_constraintVertical_bias="0.077" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"
@@ -86,6 +87,8 @@
                 android:textColor="@color/black"
                 android:textSize="32sp" />
 
+
+
             <!-- Texto de instrução para nova senha -->
             <TextView
                 android:id="@+id/tvChangePasswordLabel"
@@ -95,6 +98,39 @@
                 android:textSize="16sp"
                 android:layout_marginTop="20sp"
                 android:layout_marginBottom="20sp"/>
+
+            <EditText
+                android:id="@+id/etNome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Nome"
+                android:padding="16dp"
+                android:text="Nome do usuário atual" />
+
+            <EditText
+                android:id="@+id/etSobrenome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Sobrenome"
+                android:padding="16dp"
+                android:text="Sobrenome do usuário atual" />
+
+            <EditText
+                android:id="@+id/etEndereco"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Endereço"
+                android:padding="16dp"
+                android:text="Endereço do usuário atual" />
+
+            <Button
+                android:id="@+id/saveButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/holo_blue_light"
+                android:text="Salvar Alterações"
+                android:layout_marginTop="20dp" />
+
 
             <!-- Campo de nova senha -->
             <EditText

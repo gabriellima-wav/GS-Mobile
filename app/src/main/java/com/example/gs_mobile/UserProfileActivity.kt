@@ -14,11 +14,12 @@ import com.example.gs_mobile.MainActivity
 import com.example.gs_mobile.R
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class UserProfileActivity : AppCompatActivity() {
 
-
     private lateinit var auth: FirebaseAuth
+    private lateinit var firestore: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,20 +29,49 @@ class UserProfileActivity : AppCompatActivity() {
         window.statusBarColor = ContextCompat.getColor(this, R.color.colorPrimary)
 
         auth = FirebaseAuth.getInstance()
+        firestore = FirebaseFirestore.getInstance()
 
         val btnHome = findViewById<ImageButton>(R.id.btnHome)
+        val etNome: EditText = findViewById(R.id.etNome)
+        val etSobrenome: EditText = findViewById(R.id.etSobrenome)
+        val etEndereco: EditText = findViewById(R.id.etEndereco)
+        val changePasswordButton: Button = findViewById(R.id.changePasswordButton)
+        val deleteAccountButton: Button = findViewById(R.id.deleteAccountButton)
+        val saveButton: Button = findViewById(R.id.saveButton)
+
         btnHome.setOnClickListener {
             val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)
             finish()
         }
 
-        val newPasswordEditText: EditText = findViewById(R.id.newPasswordEditText)
-        val changePasswordButton: Button = findViewById(R.id.changePasswordButton)
-        val deleteAccountButton: Button = findViewById(R.id.deleteAccountButton)
+        // Recupera as informações do Firestore
+        val user = auth.currentUser
+        user?.let {
+            val userId = it.uid
+
+            firestore.collection("users").document(userId)
+                .get()
+                .addOnSuccessListener { document ->
+                    if (document != null) {
+                        val nome = document.getString("nome")
+                        val sobrenome = document.getString("sobrenome")
+                        val endereco = document.getString("endereco")
+
+                        // Preenche os campos de edição com os dados do usuário
+                        etNome.setText(nome)
+                        etSobrenome.setText(sobrenome)
+                        etEndereco.setText(endereco)
+                    }
+                }
+                .addOnFailureListener {
+                    Toast.makeText(this, "Erro ao recuperar dados!", Toast.LENGTH_SHORT).show()
+                }
+        }
 
         // Alterar senha
         changePasswordButton.setOnClickListener {
+            val newPasswordEditText: EditText = findViewById(R.id.newPasswordEditText)
             val newPassword = newPasswordEditText.text.toString().trim()
             if (newPassword.isNotEmpty()) {
                 showConfirmationDialog("Alterar Senha", "Deseja alterar sua senha?") {
@@ -57,6 +87,42 @@ class UserProfileActivity : AppCompatActivity() {
             showConfirmationDialog("Excluir Conta", "Deseja excluir sua conta permanentemente?") {
                 deleteAccount()
             }
+        }
+
+        // Salvar informações do perfil
+        saveButton.setOnClickListener {
+            val nome = etNome.text.toString().trim()
+            val sobrenome = etSobrenome.text.toString().trim()
+            val endereco = etEndereco.text.toString().trim()
+
+            if (nome.isNotEmpty() && sobrenome.isNotEmpty() && endereco.isNotEmpty()) {
+                updateUserData(nome, sobrenome, endereco)
+            } else {
+                Toast.makeText(this, "Todos os campos devem ser preenchidos!", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    // Código para alterar as informações do usuário
+    private fun updateUserData(nome: String, sobrenome: String, endereco: String) {
+        val user = auth.currentUser
+        user?.let {
+            val userId = it.uid
+            val userData = hashMapOf(
+                "nome" to nome,
+                "sobrenome" to sobrenome,
+                "endereco" to endereco
+            )
+
+            // Atualiza os dados no Firestore
+            firestore.collection("users").document(userId)
+                .set(userData)
+                .addOnSuccessListener {
+                    Toast.makeText(this, "Dados atualizados com sucesso!", Toast.LENGTH_SHORT).show()
+                }
+                .addOnFailureListener {
+                    Toast.makeText(this, "Erro ao atualizar dados!", Toast.LENGTH_SHORT).show()
+                }
         }
     }
 
@@ -129,5 +195,4 @@ class UserProfileActivity : AppCompatActivity() {
             Toast.makeText(this, "Usuário não autenticado!", Toast.LENGTH_SHORT).show()
         }
     }
-
 }
