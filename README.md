@@ -59,7 +59,7 @@ A **ProspEco** representa uma solução estratégica para empresas focadas em au
 
 ### Passos:
 1. Clone este repositório em sua máquina local:
-   ```bash
+   ```https://github.com/gabriellima-wav/GS-Mobile.git
 ### Abra o projeto no Android Studio.
 
 2. Faça o build do aplicativo no Android Studio:
