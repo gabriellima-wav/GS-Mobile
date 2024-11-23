@@ -59,5 +59,5 @@ dependencies {
     implementation ("com.squareup.okhttp3:logging-interceptor:4.9.3")
     implementation (libs.ojdbc8)
     implementation ("com.oracle.database.jdbc:ojdbc8:19.19.0.0")
-
+    implementation ("com.squareup.retrofit2:converter-moshi:2.9.0")
 }
